@@ -5,7 +5,7 @@ require 'rack/spyjson/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "rack-spyjson"
-  spec.version       = Rack::Spyjson::VERSION
+  spec.version       = Rack::SpyJSON::VERSION
   spec.authors       = ["Uchio KONDO"]
   spec.email         = ["udzura@udzura.jp"]
   spec.description   = %q{Spying request and json response}
@@ -18,6 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.add_runtime_dependency "rack"
+  spec.add_runtime_dependency "coderay"
+
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "pry"
 end
