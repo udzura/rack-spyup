@@ -11,25 +11,78 @@ module Rack
     attr_accessor :logger
 
     def call(env)
+      req = Rack::Request.new(env)
+      detected_logger(env).debug format_request_output(req)
+
       status_code, headers, body = @app.call(env)
       res = Rack::Response.new(body, status_code, headers)
       if res.content_type =~ /json/
-        _logger = logger || env['rack.logger'] || env['rack.error'] || ::Logger.new(STDOUT)
         json = body.join
-        if _logger.respond_to? :debug
-          _logger.debug format_log_output(res, json)
-        elsif _logger.respond_to? :write
-          _logger.write format_log_output(res, json)
-        else
-          raise "Logger must be specified"
-        end
+        detected_logger(env).debug format_response_output(res, json)
       end
       return res.finish
     end
 
     private
-    def format_log_output(res, json)
-      <<-FORMAT % [res.status, compose_headers(res), pretty_json(json)]
+    # Do not cache - run detection by each call
+    def detected_logger(env)
+      _logger = logger || env['rack.logger'] || env['rack.error'] || ::Logger.new(STDOUT)
+      unless _logger.respond_to? :debug
+        def _logger.debug(str)
+          _logger.write(str)
+        end
+      end
+      _logger
+    end
+
+    def format_request_output(req)
+      body = req.body.read
+      req.body.rewind
+      <<-FORMAT % [to_request_line(req), compose_request_headers(req), body, format_cookies(req.cookies)]
+** REQUEST SPYED **
+Request:
+\t%s
+Headers:
+%s
+Body:
+\t%s
+Cookies:
+%s
+      FORMAT
+    end
+
+    def to_request_line(req)
+      "#{req.request_method} #{req.url}"
+    end
+
+    def compose_request_headers(req)
+      headers = <<-HEADERS.chomp
+Content-Type: #{req.content_type}
+Content-Length: #{req.content_length}
+Remote: #{req.env['REMOTE_ADDR']}
+      HEADERS
+      req.env.each do |key, value|
+        parts = key.scan(/^HTTP_([A-Z_]+)/).flatten.first
+        next if parts.nil?
+        _key = parts.split('_')
+          .map{|part| part.sub(/(?<=^[A-Z])[A-Z]*/) {|m| m.downcase } }
+          .join("-")
+        headers << "\n" << "#{_key}: #{value}"
+      end
+      headers
+        .gsub(/^[-a-zA-Z]+:/m, red('\0'))
+        .gsub(/^/, "\t")
+    end
+
+    def format_cookies(cookies)
+      return gray("\t<none>") if cookies.empty?
+      cookies.map{|k, v|
+        "\t#{red(k)} = #{cyan(v)}"
+      }.join("\n")
+    end
+
+    def format_response_output(res, json)
+      <<-FORMAT % [res.status, compose_response_headers(res), pretty_json(json)]
 ** RESPONSE SPYED **
 Status Code: %d
 Headers:
@@ -45,7 +98,7 @@ Body:
         .gsub(/^/m, "\t")
     end
 
-    def compose_headers(res)
+    def compose_response_headers(res)
       res.headers.map {|k, v|
         if v.include? "\n"
           v = v.gsub(/\n/, "\n\t\t")
@@ -56,6 +109,14 @@ Body:
 
     def red(key)
       "\e[31m#{key}\e[0m"
+    end
+
+    def cyan(value)
+      "\e[36m#{value}\e[0m"
+    end
+
+    def gray(value)
+      "\e[37m#{value}\e[0m"
     end
   end
 end
