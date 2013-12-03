@@ -24,6 +24,18 @@ use Rack::SpyJSON do |config|
 end
 ```
 
+### `spyup` command
+
+rack-spyjson is shipped with `spyup` command.
+You can use usual config.ru with request and response spyed:
+
+```bash
+$ spyup config.ru
+```
+
+`spyup` has the same options as `rackup` (expect `--builder`),
+because she use `Rack::Server` internally.
+
 ## Contributing
 
 1. Fork it
