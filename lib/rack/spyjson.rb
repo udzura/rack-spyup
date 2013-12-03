@@ -11,19 +11,28 @@ module Rack
     attr_accessor :logger
 
     def call(env)
+      return @app.call(env) if ignore_case?(env)
+
       req = Rack::Request.new(env)
       detected_logger(env).debug format_request_output(req)
 
       status_code, headers, body = @app.call(env)
       res = Rack::Response.new(body, status_code, headers)
       if res.content_type =~ /json/
-        json = body.join
+        json = ""
+        body.each{|part| json << part }
         detected_logger(env).debug format_response_output(res, json)
       end
       return res.finish
     end
 
     private
+    def ignore_case?(env)
+      # TODO more options to omit logging
+      return true  if env["PATH_INFO"] =~ /favicon.ico$/
+      return false
+    end
+
     # Do not cache - run detection by each call
     def detected_logger(env)
       _logger = logger || env['rack.logger'] || env['rack.error'] || ::Logger.new(STDOUT)

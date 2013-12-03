@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# -*- mode: ruby -*-
+require 'rack'
+require 'rack/server'
+
+server = Rack::Server.new
+
+builder_script = File.read(server.options.delete(:config) || 'config.ru')
+builder_script.prepend "use Rack::SpyJSON\n"
+builder_script.prepend "require 'rack-spyjson'\n"
+
+server.options[:builder] = builder_script
+server.start
