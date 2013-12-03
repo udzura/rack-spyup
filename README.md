@@ -36,6 +36,11 @@ $ spyup config.ru
 `spyup` has the same options as `rackup` (expect `--builder`),
 because she use `Rack::Server` internally.
 
+## What you will see
+
+![Just like this](https://raw.github.com/udzura/rack-spyjson/master/docs/spyup.png)
+
+
 ## Contributing
 
 1. Fork it
