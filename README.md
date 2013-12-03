@@ -1,4 +1,4 @@
-# Rack::Spyjson
+# Rack::SpyJSON
 
 Spying request and json response
 
@@ -33,7 +33,7 @@ You can use usual config.ru with request and response spyed:
 $ spyup config.ru
 ```
 
-`spyup` has the same options as `rackup` (expect `--builder`),
+`spyup` has the same options as `rackup` (except `--builder`),
 because she use `Rack::Server` internally.
 
 ## What you will see
