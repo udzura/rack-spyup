@@ -1,6 +1,6 @@
 # Rack::Spyjson
 
-TODO: Write a gem description
+Spying request and json response
 
 ## Installation
 
@@ -18,7 +18,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+use Rack::SpyJSON do |config|
+  config.logger = Logger.new(STDOUT)
+end
+```
 
 ## Contributing
 

@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "rack-spyjson"
   spec.version       = Rack::Spyjson::VERSION
   spec.authors       = ["Uchio KONDO"]
-  spec.email         = ["udzura@paperboy.co.jp"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.email         = ["udzura@udzura.jp"]
+  spec.description   = %q{Spying request and json response}
+  spec.summary       = %q{Spying request and json response}
+  spec.homepage      = "https://github.com/udzura/rack-spyjson"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
