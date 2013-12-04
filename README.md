@@ -2,6 +2,8 @@
 
 Spying request and json response
 
+[![wercker status](https://app.wercker.com/status/badde83f7252323fde185c68212600ba/m "wercker status")](https://app.wercker.com/project/bykey/badde83f7252323fde185c68212600ba)
+
 ## Installation
 
 Add this line to your application's Gemfile:
