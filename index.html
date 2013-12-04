@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Rack-spyup by udzura</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Rack-spyup</h1>
+        <h2>Spying request and json response</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/udzura/rack-spyup/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/udzura/rack-spyup/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/udzura/rack-spyup" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="rackspyup" class="anchor" href="#rackspyup"><span class="octicon octicon-link"></span></a>Rack::SpyUp</h1>
+
+<p>Spying requests and responses with rack power.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'rack-spyup'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install rack-spyup
+</code></pre>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<div class="highlight highlight-ruby"><pre><span class="n">use</span> <span class="ss">Rack</span><span class="p">:</span><span class="ss">:SpyUp</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">STDOUT</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+
+<h3>
+<a name="spyup-command" class="anchor" href="#spyup-command"><span class="octicon octicon-link"></span></a><code>spyup</code> command</h3>
+
+<p>rack-spyup is shipped with <code>spyup</code> command.
+You can use usual config.ru with request and response spyed:</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>spyup config.ru
+</pre></div>
+
+<p><code>spyup</code> has the same options as <code>rackup</code> (except <code>--builder</code>),
+because she uses <code>Rack::Server</code> internally.</p>
+
+<h2>
+<a name="what-you-will-see" class="anchor" href="#what-you-will-see"><span class="octicon octicon-link"></span></a>What you will see</h2>
+
+<p><img src="https://raw.github.com/udzura/rack-spyup/master/docs/spyup.png" alt="Just like this"></p>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
