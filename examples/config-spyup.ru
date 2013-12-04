@@ -1,5 +1,5 @@
 require 'json'
-require 'rack-spyjson'
+require 'rack-spyup'
 require 'pry'
 
 App = lambda do |env|
@@ -13,5 +13,5 @@ App = lambda do |env|
 end
 
 # spyup this file and you will get the same log
-# use Rack::SpyJSON
+# use Rack::SpyUp
 run App

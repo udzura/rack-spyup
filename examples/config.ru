@@ -1,5 +1,5 @@
 require 'json'
-require 'rack-spyjson'
+require 'rack-spyup'
 require 'pry'
 
 App = lambda do |env|
@@ -12,5 +12,5 @@ App = lambda do |env|
   [200, {"Content-Type" => "application/json"}, [json]]
 end
 
-use Rack::SpyJSON
+use Rack::SpyUp
 run App

@@ -6,8 +6,8 @@ require 'rack/server'
 server = Rack::Server.new
 
 builder_script = File.read(server.options.delete(:config) || 'config.ru')
-builder_script.prepend "use Rack::SpyJSON\n"
-builder_script.prepend "require 'rack-spyjson'\n"
+builder_script.prepend "use Rack::SpyUp\n"
+builder_script.prepend "require 'rack-spyup'\n"
 
 server.options[:builder] = builder_script
 server.start

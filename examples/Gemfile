@@ -1,5 +1,5 @@
 source "https://rubygems.org"
 
 gem "rack"
-gem "rack-spyjson", path: "../"
+gem "rack-spyup", path: "../"
 gem "pry"

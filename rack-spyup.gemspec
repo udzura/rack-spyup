@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rack/spyjson/version'
+require 'rack/spyup/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "rack-spyjson"
-  spec.version       = Rack::SpyJSON::VERSION
+  spec.name          = "rack-spyup"
+  spec.version       = Rack::SpyUp::VERSION
   spec.authors       = ["Uchio KONDO"]
   spec.email         = ["udzura@udzura.jp"]
   spec.description   = %q{Spying request and json response}
   spec.summary       = %q{Spying request and json response}
-  spec.homepage      = "https://github.com/udzura/rack-spyjson"
+  spec.homepage      = "https://github.com/udzura/rack-spyup"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

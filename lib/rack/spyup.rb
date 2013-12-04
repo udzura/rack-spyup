@@ -1,8 +1,8 @@
-require "rack/spyjson/version"
+require "rack/spyup/version"
 require "logger"
 
 module Rack
-  class SpyJSON
+  class SpyUp
     def initialize(app, &configure)
       @app = app
       configure.call(self) if block_given?

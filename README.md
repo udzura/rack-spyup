@@ -1,4 +1,4 @@
-# Rack::SpyJSON
+# Rack::SpyUp
 
 Spying request and json response
 
@@ -6,7 +6,7 @@ Spying request and json response
 
 Add this line to your application's Gemfile:
 
-    gem 'rack-spyjson'
+    gem 'rack-spyup'
 
 And then execute:
 
@@ -14,19 +14,19 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install rack-spyjson
+    $ gem install rack-spyup
 
 ## Usage
 
 ```ruby
-use Rack::SpyJSON do |config|
+use Rack::SpyUp do |config|
   config.logger = Logger.new(STDOUT)
 end
 ```
 
 ### `spyup` command
 
-rack-spyjson is shipped with `spyup` command.
+rack-spyup is shipped with `spyup` command.
 You can use usual config.ru with request and response spyed:
 
 ```bash
@@ -34,11 +34,11 @@ $ spyup config.ru
 ```
 
 `spyup` has the same options as `rackup` (except `--builder`),
-because she use `Rack::Server` internally.
+because she uses `Rack::Server` internally.
 
 ## What you will see
 
-![Just like this](https://raw.github.com/udzura/rack-spyjson/master/docs/spyup.png)
+![Just like this](https://raw.github.com/udzura/rack-spyup/master/docs/spyup.png)
 
 
 ## Contributing
