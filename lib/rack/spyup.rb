@@ -1,12 +1,14 @@
 require "rack/spyup/version"
+require "rack/spyup/configuration"
 require "logger"
 
 module Rack
   class SpyUp
-    def initialize(app, &configure)
+    def initialize(app, &instance_configure)
       @app = app
       @colorize = true
-      configure.call(self) if block_given?
+      @logger   = self.class.config.logger
+      instance_configure.call(self) if block_given?
     end
     attr_reader :app
     attr_accessor :logger, :colorize
@@ -25,6 +27,16 @@ module Rack
         detected_logger(env).debug format_response_output(res, json)
       end
       return res.finish
+    end
+
+    class << self
+      def config(&global_configure)
+        @__config ||= Rack::SpyUp::Configuration.default
+        if block_given?
+          global_configure.call(@__config)
+        end
+        @__config
+      end
     end
 
     private
