@@ -146,3 +146,5 @@ Body:
     end
   end
 end
+
+require "rack/spyup/railtie" if defined?(Rails)
