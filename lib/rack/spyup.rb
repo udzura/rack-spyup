@@ -5,10 +5,11 @@ module Rack
   class SpyUp
     def initialize(app, &configure)
       @app = app
+      @colorize = true
       configure.call(self) if block_given?
     end
     attr_reader :app
-    attr_accessor :logger
+    attr_accessor :logger, :colorize
 
     def call(env)
       return @app.call(env) if ignore_case?(env)
@@ -102,9 +103,10 @@ Body:
     end
 
     def pretty_json(json)
-      CodeRay.scan(JSON.pretty_unparse(JSON.parse(json)), :json)
-        .terminal
-        .gsub(/^/m, "\t")
+      formatted = JSON.pretty_unparse(JSON.parse(json))
+      formatted = CodeRay.scan(formatted, :json).terminal if colorize
+
+      formatted.gsub(/^/m, "\t")
     end
 
     def compose_response_headers(res)
@@ -117,14 +119,17 @@ Body:
     end
 
     def red(key)
+      return key unless colorize
       "\e[31m#{key}\e[0m"
     end
 
     def cyan(value)
+      return value unless colorize
       "\e[36m#{value}\e[0m"
     end
 
     def gray(value)
+      return value unless colorize
       "\e[37m#{value}\e[0m"
     end
   end
