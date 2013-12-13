@@ -31,7 +31,9 @@
         <h1>
 <a name="rackspyup" class="anchor" href="#rackspyup"><span class="octicon octicon-link"></span></a>Rack::SpyUp</h1>
 
-<p>Spying requests and responses with rack power.</p>
+<p>Spying request and json response</p>
+
+<p><a href="https://app.wercker.com/project/bykey/badde83f7252323fde185c68212600ba"><img src="https://app.wercker.com/status/badde83f7252323fde185c68212600ba/m" alt="wercker status" title="wercker status"></a></p>
 
 <h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
@@ -54,7 +56,7 @@
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<div class="highlight highlight-ruby"><pre><span class="n">use</span> <span class="ss">Rack</span><span class="p">:</span><span class="ss">:SpyUp</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<div class="highlight highlight-ruby"><pre><span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">SpyUp</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">STDOUT</span><span class="p">)</span>
 <span class="k">end</span>
 </pre></div>
@@ -70,6 +72,31 @@ You can use usual config.ru with request and response spyed:</p>
 
 <p><code>spyup</code> has the same options as <code>rackup</code> (except <code>--builder</code>),
 because she uses <code>Rack::Server</code> internally.</p>
+
+<h3>
+<a name="when-you-use-rails" class="anchor" href="#when-you-use-rails"><span class="octicon octicon-link"></span></a>When you use rails</h3>
+
+<p>rack-spyup uses railtie system. In rails project, only you must do is just to set your Gemfile:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'rack-spyup'</span>
+</pre></div>
+
+<p>BTW, if you want to use this middleware only via <code>spyup</code> command, just edit Gemfile:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'rack-spyup'</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="kp">false</span>
+</pre></div>
+
+<p>Which does not enable middleware, and you may use the command <code>bundle exec spyup -p 3000</code> or like.</p>
+
+<h2>
+<a name="configurations" class="anchor" href="#configurations"><span class="octicon octicon-link"></span></a>Configurations</h2>
+
+<div class="highlight highlight-ruby"><pre><span class="no">Rack</span><span class="o">::</span><span class="no">SpyUp</span><span class="o">.</span><span class="n">config</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span> <span class="c1"># Set your custom logger</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">enabled_environments</span> <span class="o">=</span> <span class="sx">%w(development staging)</span> <span class="c1"># Set the rails envs you want to enable in</span>
+  <span class="c1"># By default this is set to %w(development)</span>
+<span class="k">end</span>
+</pre></div>
 
 <h2>
 <a name="what-you-will-see" class="anchor" href="#what-you-will-see"><span class="octicon octicon-link"></span></a>What you will see</h2>
