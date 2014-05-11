@@ -35,6 +35,7 @@ describe Rack::SpyUp do
       mock_app do
         use Rack::SpyUp do |mw|
           mw.logger = _logger
+          mw.colorize = true
         end
         run lambda {|env| [200, {"Content-Type" => "text/html"}, ["OK"]]}
       end
@@ -50,6 +51,24 @@ describe Rack::SpyUp do
         use Rack::SpyUp do |mw|
           mw.logger = _logger
           mw.colorize = false
+        end
+        run lambda {|env| [200, {"Content-Type" => "text/html"}, ["OK"]]}
+      end
+
+      get "/hello"
+      @output.rewind
+      expect(@output.read).not_to match(/\e\[\d+m/)
+    end
+
+    it "should not contain colored log when configured by 'Rack::SpyUp.config'" do
+      Rack::SpyUp.config do |config|
+        config.colorize = false
+      end
+
+      _logger = Logger.new(@output)
+      mock_app do
+        use Rack::SpyUp do |mw|
+          mw.logger = _logger
         end
         run lambda {|env| [200, {"Content-Type" => "text/html"}, ["OK"]]}
       end
