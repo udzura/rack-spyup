@@ -6,7 +6,7 @@ module Rack
   class SpyUp
     def initialize(app, &instance_configure)
       @app = app
-      @colorize = true
+      @colorize = self.class.config.colorize
       @logger   = self.class.config.logger
       instance_configure.call(self) if block_given?
     end
